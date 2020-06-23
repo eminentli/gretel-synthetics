@@ -243,6 +243,8 @@ def _predict_chars(
                 store.field_delimiter_token, store.field_delimiter
             )
 
+        if "<p>" in decoded:
+            decoded.replace("<p>", "")
         if "<n>" in decoded:
             return PredString(decoded.replace("<n>", ""))
         elif 0 < store.gen_chars <= len(decoded):
