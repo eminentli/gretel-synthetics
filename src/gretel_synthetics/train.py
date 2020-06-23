@@ -136,7 +136,7 @@ def _annotate_training_data(store: BaseConfig):
     labeled_text = ''
     with open(store.training_data, 'w') as f:
         for sample in training_text:
-            chunk = f"{sample}<n>\n"
+            chunk = f"<p>{sample}<n>\n"
             f.write(chunk)
             labeled_text += chunk
     logging.info(f"Dataset size: {len(training_text)} lines, {len(labeled_text)} characters")
@@ -161,7 +161,7 @@ def _train_tokenizer(store: BaseConfig) -> spm.SentencePieceProcessor:
     spm.SentencePieceTrainer.Train(
         input=store.training_data,
         model_prefix=store.tokenizer_prefix,
-        user_defined_symbols=["<n>", store.field_delimiter_token],
+        user_defined_symbols=["<p>", "<n>", store.field_delimiter_token],
         vocab_size=store.vocab_size,
         hard_vocab_limit=False,
         max_sentence_length=store.max_line_len,
